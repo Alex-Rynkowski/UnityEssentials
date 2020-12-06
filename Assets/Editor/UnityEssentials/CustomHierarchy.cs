@@ -5,9 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace UnityEssential {
-
-
+namespace UnityEssentials {
     [InitializeOnLoad]
     public class CustomHierarchy : MonoBehaviour {
         public static Color ChangedPrefabColor = new Color(0.7817802f, 0.8f, 0);
