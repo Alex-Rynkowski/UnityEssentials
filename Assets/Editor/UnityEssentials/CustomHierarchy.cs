@@ -10,7 +10,6 @@ namespace UnityEssentials {
     public class CustomHierarchy : MonoBehaviour {
         public static Color ChangedPrefabColor = new Color(0.7817802f, 0.8f, 0);
         public static Color BackgroundColor = new Color(0.2196079f, 0.2196079f, 0.2196079f);
-        public static Color PrefabTextColor = new Color(0.3843138f, 0.4980392f, 0.6666667f);
 
         static Vector2 _offset = new Vector2(18, 0);
 
@@ -24,10 +23,19 @@ namespace UnityEssentials {
             var obj = EditorUtility.InstanceIDToObject(instanceID);
             var content = EditorGUIUtility.ObjectContent(EditorUtility.InstanceIDToObject(instanceID), null);
 
+
             if (obj == null || !PrefabUtility.IsAnyPrefabInstanceRoot(obj as GameObject)) return;
+
 
             if (PrefabUtility.HasPrefabInstanceAnyOverrides(obj as GameObject, false)) {
                 textColor = ChangedPrefabColor;
+            }
+
+            if (selectionRect.Contains(Event.current.mousePosition) && !Selection.instanceIDs.Contains(instanceID)) {
+                EditorGUI.DrawRect(selectionRect, new Color(0.2666667f, 0.2666667f, 0.2666667f));
+                DrawNewLabel(selectionRect, obj, textColor);
+                DrawGameObjectIcon(selectionRect, content);
+                return;
             }
 
             var prefabType = PrefabUtility.GetPrefabAssetType(obj);
@@ -38,8 +46,13 @@ namespace UnityEssentials {
                 }
             }
 
+
             EditorGUI.DrawRect(selectionRect, backgroundColor);
             DrawNewLabel(selectionRect, obj, textColor);
+            DrawGameObjectIcon(selectionRect, content);
+        }
+
+        static void DrawGameObjectIcon(Rect selectionRect, GUIContent content) {
             GUI.DrawTexture(new Rect(selectionRect.xMin, selectionRect.yMin, 16, 16), content.image);
         }
 
