@@ -1,16 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace UnityEssentials {
     [InitializeOnLoad]
     public class CustomHierarchy : MonoBehaviour {
         public static Color ChangedPrefabColor = new Color(0.7817802f, 0.8f, 0);
         public static Color BackgroundColor = new Color(0.2196079f, 0.2196079f, 0.2196079f);
-
+        public static Color PrefabTextColor = new Color(0.3843138f, 0.4980392f, 0.6666667f);
+        public static Color HoverOverBackgroundColor = new Color(0.2666667f, 0.2666667f, 0.2666667f);
         static Vector2 _offset = new Vector2(18, 0);
 
         static CustomHierarchy() {
@@ -18,11 +16,18 @@ namespace UnityEssentials {
         }
 
         static void HandleHierarchyWindowItemOnGui(int instanceID, Rect selectionRect) {
-            var textColor = new Color(0.454902f, 0.6156863f, 0.854902f);
+            var textColor = PrefabTextColor;
             var backgroundColor = BackgroundColor;
             var obj = EditorUtility.InstanceIDToObject(instanceID);
             var content = EditorGUIUtility.ObjectContent(EditorUtility.InstanceIDToObject(instanceID), null);
 
+
+            if (selectionRect.Contains(Event.current.mousePosition) && !Selection.instanceIDs.Contains(instanceID) && obj != null) {
+                EditorGUI.DrawRect(selectionRect, HoverOverBackgroundColor);
+                DrawNewLabel(selectionRect, obj, Color.white);
+                DrawGameObjectIcon(selectionRect, content);
+                return;
+            }
 
             if (obj == null || !PrefabUtility.IsAnyPrefabInstanceRoot(obj as GameObject)) return;
 
@@ -31,12 +36,6 @@ namespace UnityEssentials {
                 textColor = ChangedPrefabColor;
             }
 
-            if (selectionRect.Contains(Event.current.mousePosition) && !Selection.instanceIDs.Contains(instanceID)) {
-                EditorGUI.DrawRect(selectionRect, new Color(0.2666667f, 0.2666667f, 0.2666667f));
-                DrawNewLabel(selectionRect, obj, textColor);
-                DrawGameObjectIcon(selectionRect, content);
-                return;
-            }
 
             var prefabType = PrefabUtility.GetPrefabAssetType(obj);
             if (prefabType == PrefabAssetType.Regular || prefabType == PrefabAssetType.Variant) {
@@ -58,10 +57,18 @@ namespace UnityEssentials {
 
         static void DrawNewLabel(Rect selectionRect, Object obj, Color textColor) {
             var offsetRect = new Rect(selectionRect.position + _offset, selectionRect.size);
-            EditorGUI.LabelField(offsetRect, obj.name, new GUIStyle {
-                normal = new GUIStyleState {textColor = textColor},
-                fontStyle = FontStyle.Bold
-            });
+
+            if (PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Regular || PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Variant) {
+                EditorGUI.LabelField(offsetRect, obj.name, new GUIStyle {
+                    normal = new GUIStyleState {textColor = textColor},
+                    fontStyle = FontStyle.Bold
+                });
+            }
+            else {
+                EditorGUI.LabelField(offsetRect, obj.name, new GUIStyle {
+                    normal = new GUIStyleState {textColor = textColor},
+                });
+            }
         }
     }
 }
