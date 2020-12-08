@@ -38,7 +38,7 @@ namespace UnityEssentials {
 
 
             var prefabType = PrefabUtility.GetPrefabAssetType(obj);
-            if (prefabType == PrefabAssetType.Regular || prefabType == PrefabAssetType.Variant) {
+            if (prefabType == PrefabAssetType.Regular || prefabType == PrefabAssetType.Variant || prefabType == PrefabAssetType.Model) {
                 if (Selection.instanceIDs.Contains(instanceID)) {
                     textColor = Color.white;
                     backgroundColor = new Color(0.172549f, 0.3647059f, 0.5294118f);
@@ -58,7 +58,7 @@ namespace UnityEssentials {
         static void DrawNewLabel(Rect selectionRect, Object obj, Color textColor) {
             var offsetRect = new Rect(selectionRect.position + _offset, selectionRect.size);
 
-            if (PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Regular || PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Variant) {
+            if (PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Regular || PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Variant || PrefabUtility.GetPrefabAssetType(obj as GameObject) == PrefabAssetType.Model) {
                 EditorGUI.LabelField(offsetRect, obj.name, new GUIStyle {
                     normal = new GUIStyleState {textColor = textColor},
                     fontStyle = FontStyle.Bold
