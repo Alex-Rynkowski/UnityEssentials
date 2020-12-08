@@ -9,3 +9,5 @@ Implementing the custom hierarchy (UnityEssentials):
 - Unpack it
 - copy the Editor folder into your assets folder. If you already have an editor folder, copy the UnityEssentials folder instead.
 should be ../Assets/Editor/UnityEssentials/UnityEssentials.cs
+
+To edit the colors go to: Tools (top of the screen where the menus are) --> Hierarchy Editor
