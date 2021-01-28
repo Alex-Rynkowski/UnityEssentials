@@ -17,3 +17,6 @@ Examples
 
 Modified Prefab:
 ![name-of-you-image](https://user-images.githubusercontent.com/66161323/106120170-57059f00-6156-11eb-86ee-8806c67be4e0.png)
+
+Unmodified Prefab:
+![name-of-you-image](https://user-images.githubusercontent.com/66161323/106120581-d5fad780-6156-11eb-8e9d-849190f0d039.png)
