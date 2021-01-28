@@ -14,4 +14,5 @@ To edit the colors go to: Tools (top of the screen where the menus are) --> Hier
 
 
 
-https://user-images.githubusercontent.com/66161323/106120170-57059f00-6156-11eb-86ee-8806c67be4e0.png
+
+![name-of-you-image] (https://user-images.githubusercontent.com/66161323/106120170-57059f00-6156-11eb-86ee-8806c67be4e0.png)
